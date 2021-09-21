@@ -1,8 +1,9 @@
 import React from 'react';
+import GoalForm from './components/GoalForm/GoalForm'
 
 function App() {
   return (
-    <div>Hello world</div>
+    <GoalForm />
   );
 }
 
