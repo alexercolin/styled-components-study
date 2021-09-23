@@ -1,22 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./GoalForm.css";
 
-const GoalForm = () => {
-  const [goal, setGoal] = useState("");
+interface IGoal {
+  description: string;
+}
 
-  const list:any = [];
+const GoalForm = () => {
+  const [goal, setGoal] = useState<IGoal>(Object);
+  const [listGoal, setListGoal] = useState<IGoal[]>([]);
+
+  const goalInputHandler = (event: any) => {
+    if (event.target.value !== "") {
+      setGoal(event.target.value);
+    }
+  };
 
   const handleSubmitGoal = () => {
-    list.push('oi');
-
-    console.log(list)
+    setListGoal([...listGoal, goal]);
   };
+
+  const goalDeleteHandler = () => {
+    const listDelete = [...listGoal, goal]
+    listDelete.shift()
+    setListGoal(listDelete)
+  }
 
   return (
     <div>
       <p>Course Goal</p>
-      <input type="text" />
-      <button onClick={handleSubmitGoal} type="submit">Add Goal</button>
+      <input value={goal.description} onChange={goalInputHandler} type="text" />
+      <button onClick={handleSubmitGoal} type="submit">
+        Add Goal
+      </button>
+      {listGoal.map((description, i) => (
+        <li onClick={goalDeleteHandler} key={i}>{description}</li>
+      ))}
     </div>
   );
 };
